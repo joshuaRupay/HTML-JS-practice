@@ -1,0 +1,59 @@
+<html>
+	<canvas id="miCanvas" width="800" height="480" style="border:1px black solid;background-color:red;" onclick="activar()"/><!--clickEnCanvas(event)"/-->
+</html>
+<script>
+var ctx = document.getElementById("miCanvas").getContext('2d');
+var activado = false;
+var xPersonaje = 0;
+
+var dibujamosFrame1 = true;
+var frame1, frame2;
+var actualizaFrame =0;
+function activar()
+{
+	activado = !activado;
+	if(activado == true)
+	{
+		
+		frame1 = document.createElement("img");
+		frame1.src = "anim1.png";
+		frame2 = document.createElement("img");
+		frame2.src = "anim2.png";
+		
+		var tiempoInicial = Date.now();
+		
+		intervalo = setInterval(function() {
+			actualizar(Date.now() - tiempoInicial);
+			pintar();
+			
+			tiempoInicial = Date.now();
+		}, 16);//60 fps
+	}
+	else{
+		clearInterval(intervalo);
+	}
+}
+
+function actualizar(tiempo)
+{
+	xPersonaje++;
+	
+	actualizaFrame++;
+	if(actualizaFrame > 9)
+	{
+		dibujamosFrame1 = !dibujamosFrame1;
+		actualizaFrame = 0;
+	}
+}
+
+function pintar()
+{
+	ctx.fillStyle = "#FF0000";
+	ctx.fillRect(0,0,800, 480);
+	//alert("Habla");
+	if(dibujamosFrame1)
+		ctx.drawImage(frame1, xPersonaje, 300);
+	else
+		ctx.drawImage(frame2, xPersonaje, 300);
+}
+</script>

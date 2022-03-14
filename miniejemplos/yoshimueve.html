@@ -1,0 +1,105 @@
+<html>
+<div>  
+	<input id = "derecha" type = "button" value = "derecha" onclick = "activar(1)"/>
+	<input id = "arriba" type = "button" value = "arriba" onclick = "activar(2)"/>
+	<input id = "abajo" type = "button" value = "abajo" onclick = "activar(3)"/>
+	<input id = "izquierda" type = "button" value = "izquierda" onclick = "activar(4)"/>
+	
+</div>
+	<canvas id="miCanvas" width="800" height="480" style="border:1px black solid;background-color:white;" onclick = "activar()"/>
+	
+</html>
+<script>
+var ctx = document.getElementById("miCanvas").getContext('2d');
+
+var activado = false;
+var xPersonaje = 0;
+var yPersonaje = 160;
+
+var dibujamosFrame1 = true;
+var frame1, frame2, huevo;
+var actualizaFrame = 0;
+
+
+
+
+function activar(valor)
+{
+	var modo = valor;
+	activado = !activado;
+	
+	if(activado == true)
+	{
+		frame1 = document.createElement("img");
+		frame1.setAttribute("src", "Yoshi.png");
+	
+		frame2 = document.createElement("img");
+		frame2.setAttribute("src", "yoshi2.png");
+		
+		huevo = document.createElement("img");
+		huevo.setAttribute("src", "huevo.png");
+
+		
+			
+		var tiempoInicial = Date.now();
+		
+		intervalo = setInterval(function() {
+			actualizar(Date.now() - tiempoInicial,modo);
+			pintar(modo);
+			
+			tiempoInicial = Date.now();
+		}, 16);//60 fps
+	}
+	else
+	{
+		clearInterval(intervalo);
+	}
+}
+
+function actualizar(tiempo,modo)
+{
+	if (modo==1)
+	{
+		xPersonaje++;
+		actualizaFrame++;
+	}
+	else if (modo==2)
+	{
+		yPersonaje--;
+		actualizaFrame++;
+	}
+	else if (modo==3)
+	{
+		yPersonaje++;
+		actualizaFrame++;
+	}
+	else if (modo==4)
+	{
+	xPersonaje--;
+	actualizaFrame++;
+	}
+	
+	if(actualizaFrame > 20)
+	{
+		dibujamosFrame1 = !dibujamosFrame1;
+		actualizaFrame = 0;
+	}
+}
+
+function pintar(modo)
+{
+	ctx.fillStyle = "white";
+	ctx.fillRect(0,0,800, 480);
+	ctx.drawImage(huevo,735,10,60,80);
+	
+	if(dibujamosFrame1)
+		ctx.drawImage(frame1, xPersonaje,yPersonaje,100,150);
+		
+	else
+		ctx.drawImage(frame2, xPersonaje,yPersonaje,130,150);
+}
+
+
+
+</script>
+

@@ -1,0 +1,187 @@
+<html>
+	<head>
+		<title> CALCULADORA DE JOSH </title>
+	</head>
+	<body> 
+		<h1>
+			BIENVENIDO A LA CALCULADORA CHAFA ! 
+		</h1>
+		<table style="border-collapse: collapse;">
+			<tr> 
+				<td colspan = "5" style="border:1px solid black" id="screen">
+					BY GALLOS
+				</td>
+			</tr>
+			
+			<tr>    
+				<td>
+					<input type = "button" value = "7" onclick = "presionar(7)">
+				</td>
+				<td>
+					<input type = "button" value = "8" onclick = "presionar(8)">
+				</td>
+				<td>
+					<input type = "button" value = "9" onclick = "presionar(9)">
+				</td>		
+				<td>
+					<input type = "button" value = "DEL" onclick = "borrar()">
+				</td>
+				<td>
+					<input type = "button" value = "AC" onclick = "reset()">
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<input type = "button" value = "4" onclick = "presionar(4)">
+				</td>
+				<td>
+					<input type = "button" value = "5" onclick = "presionar(5)">
+				</td>
+				<td>
+					<input type = "button" value = "6" onclick = "presionar(6)">
+				</td>
+				<td>
+					<input type = "button" value = "X" onclick = "cambiarModo(3)">
+				</td>
+				<td>
+					<input type = "button" value = "/" onclick = "cambiarModo(4)">
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<input type = "button" value = "1" onclick = "presionar(1)">
+				</td>
+				<td>
+					<input type = "button" value = "2" onclick = "presionar(2)">
+				</td>
+				<td>
+					<input type = "button" value = "3" onclick = "presionar(3)">
+				</td>
+				<td>
+					<input type = "button" value = "+" onclick = "cambiarModo(1)" >
+				</td>
+				<td>
+					<input type = "button" value = "-" onclick = "cambiarModo(2)">
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<input type = "button" value = "0" onclick = "presionar(0)">
+				</td>
+				<td>
+					<input type = "button" value = "." onclick = "punto()">
+				</td>
+				<td>
+					<input type = "button" value = "x10^x">
+				</td>
+				<td>
+					<input type = "button" value = "Ans">
+				</td>
+				<td>
+					<input type = "button" value = "=" onclick= "calcular()">
+				</td>
+			</tr>
+			
+		</table>
+	</body>
+</html>
+<style>
+	h1
+	{
+		color: green;
+		text-align: center;
+	}
+</style>
+<script>
+	var printeado = 0;
+	var decimales = 0;
+	var printeado2 = 0;
+	var modo = 0;
+	
+	function cambiarModo(valorM)
+	{
+		decimales = 0;
+		modo = valorM;
+		
+	}
+	function calcular()
+	{
+		if (modo==1)
+		{
+			document.getElementById("screen").innerHTML = printeado + printeado2; 
+		}
+		else if(modo==2)
+		{
+			document.getElementById("screen").innerHTML = printeado - printeado2;
+		}
+		else if(modo==3)
+		{
+			document.getElementById("screen").innerHTML = printeado * printeado2;
+		}
+		else if(modo==4)
+		{
+			document.getElementById("screen").innerHTML = printeado / printeado2;
+		}
+	
+	}
+	//FUNCIONES DE PRINT
+	function punto()
+	{
+		decimales = 0.1;
+	}
+	
+	function presionar(valor)
+	{
+		if(modo==0)
+		{
+			if(decimales==0)
+			{
+				printeado *= 10;
+				printeado += valor;
+				
+			}
+			else{
+				printeado += valor*decimales;
+				decimales = decimales/10;
+			}
+			
+			document.getElementById("screen").innerHTML = printeado; 
+		}
+		else
+		{
+			if(decimales==0)
+			{
+				printeado2 *= 10;
+				printeado2 += valor;
+				
+			}
+			else
+			{
+				printeado2 += valor*decimales;
+				decimales = decimales/10;
+			}
+			document.getElementById("screen").innerHTML = printeado2; 
+		}
+	}
+	
+	function borrar()
+	{
+	
+		printeado -= printeado%10;
+		printeado = printeado/10;
+		document.getElementById("screen").innerHTML = printeado; 
+	
+	}
+	
+	function reset()
+	{
+		printeado = 0;
+		decimales = 0;
+		printeado2= 0;
+		document.getElementById("screen").innerHTML = printeado;
+	}
+	
+</script>
